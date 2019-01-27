@@ -6,10 +6,10 @@ Vstarcam's firmware has been recently updated so whenever the device has booted 
 
 # Usage
 
-./DownloadVideos.py [IP] [PORT] [OUTPUT DIRECTORY] [USERNAME] [PASSWORD]
+./VstarCamDownloader.py [IP] [PORT] [OUTPUT DIRECTORY] [COPY/MOVE] [USERNAME] [PASSWORD]
 
-e.g. ./DownloadVideos.py 192.168.0.15 80 /opt/videos/ bob john123
+e.g. ./VstarCamDownloader.py cameraip.changeip.net 28080 videos/IPCam1 MOVE admin 88888888
 
 # Testing
 
-The program has been tested against a Vstarcam C7837WIP, because of the nature of other cameras made by vstarcam, the web interface may be similar in design so the program should work. Other brands of smart cameras such as Foscam are similar, so they may work with this program.
+The program has been tested against a Vstarcam C7837WIP and a C7824WIP, because of the nature of other cameras made by vstarcam, the web interface may be similar in design so the program should work. Other brands of smart cameras such as Foscam are similar, so they may work with this program.
