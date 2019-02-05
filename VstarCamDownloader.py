@@ -7,6 +7,7 @@ import os
 import urllib2
 import base64
 import socket
+import time
 
 def downloadfile(url, filename, directory, username, password):
 
@@ -21,9 +22,11 @@ def downloadfile(url, filename, directory, username, password):
     if os.path.exists(directory + '/' + filename) and os.path.getsize(directory + '/' + filename) == file_size:
         print 'Already downloaded, skipping file ' + filename + ' with size ' + str(file_size);
     else:
+    #Download file
         fp = open(directory + '/' + filename, 'wb');
         print "Downloading: %s Bytes: %s" % (filename, file_size)
 
+        start = time.clock()
         file_size_dl = 0
         block_sz = 8192
         while True:
@@ -33,9 +36,13 @@ def downloadfile(url, filename, directory, username, password):
 
             file_size_dl += len(buffer)
             fp.write(buffer)
-            status = r"%10d  [%3.2f%%]" % (file_size_dl, file_size_dl * 100. / file_size)
-            status = status + chr(8)*(len(status)+1)
-            print status,
+#            status = r"%10d  [%3.2f%%]" % (file_size_dl, file_size_dl * 100. / file_size)
+#            status = status + chr(8)*(len(status)+1)
+#            print status,
+
+            done = int(50 * file_size_dl / file_size)
+            print("\r[%s%s] %s" % ('=' * done, ' ' * (50-done), humansize( file_size_dl / (time.clock() - start))) ),
+            #sys.stdout.flush()
         fp.close()
 
 def deletefile(fileurl):
@@ -53,6 +60,15 @@ def deletefile(fileurl):
 
     print "Deleted file " + file
  
+def humansize(nbytes):
+    suffixes = ['bps', 'Kbps', 'Mbps', 'Gbps']
+    i = 0
+    while nbytes >= 1024 and i < len(suffixes)-1:
+        nbytes /= 1024.
+        i += 1
+    f = ('%.2f' % nbytes).rstrip('0').rstrip('.')
+    return '%s %s' % (f, suffixes[i])
+
 def isgoodipv4(s):
     ip = socket.gethostbyname(s)
     pieces = ip.split('.')
